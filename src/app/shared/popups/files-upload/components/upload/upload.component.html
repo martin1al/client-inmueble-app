@@ -8,7 +8,10 @@
   ></progress>
 
   <div class="upload__info" *ngIf="snapshot$ | async as snapshot">
-    <div>{{ snapshot.bytesTransferred }} of {{ snapshot.totalBytes }}</div>
+    <div>
+      {{ snapshot.bytesTransferred | fileSize }} of
+      {{ snapshot.totalBytes | fileSize }}
+    </div>
 
     <div>
       <div *ngIf="downloadURL; then completed; else inProgress"></div>
