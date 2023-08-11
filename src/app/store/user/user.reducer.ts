@@ -3,7 +3,7 @@ import { UserResponse } from './user.models';
 import * as fromActions from './user.actions';
 
 export interface UserState {
-  email: any;
+  email: string | null;
   entity: UserResponse | null;
   id: string | null;
   loading: boolean | null;
@@ -20,7 +20,7 @@ const initialState: UserState = {
 
 export function reducer(
   state = initialState,
-  action: fromActions.ALL | any
+  action: fromActions.All | any
 ): UserState {
   switch (action.type) {
     case fromActions.Types.INIT: {
@@ -32,21 +32,37 @@ export function reducer(
         ...state,
         loading: false,
         entity: action.user,
-        id: action.id,
+        email: action.email,
         error: null,
       };
     }
-
-    case fromActions.Types.INIT_ERROR: {
-      return { ...state, loading: false, entity: null, error: action.error };
-    }
-
     case fromActions.Types.INIT_UNAUTHORIZED: {
-      return { ...state, loading: false, entity: null, id: null, error: null };
+      return {
+        ...state,
+        loading: false,
+        entity: null,
+        email: null,
+        error: null,
+      };
+    }
+    case fromActions.Types.INIT_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        entity: null,
+        email: null,
+        error: action.error,
+      };
     }
 
     case fromActions.Types.SIGN_IN_EMAIL: {
-      return { ...state, loading: true, entity: null, id: null, error: null };
+      return {
+        ...state,
+        loading: true,
+        entity: null,
+        email: null,
+        error: null,
+      };
     }
 
     case fromActions.Types.SIGN_IN_EMAIL_SUCCESS: {
@@ -54,7 +70,7 @@ export function reducer(
         ...state,
         loading: false,
         entity: action.user,
-        id: action.id,
+        email: action.email,
         error: null,
       };
     }
@@ -64,13 +80,19 @@ export function reducer(
         ...state,
         loading: false,
         entity: null,
-        id: null,
+        email: null,
         error: action.error,
       };
     }
 
     case fromActions.Types.SIGN_UP_EMAIL: {
-      return { ...state, loading: true, entity: null, id: null, error: null };
+      return {
+        ...state,
+        loading: true,
+        entity: null,
+        email: null,
+        error: null,
+      };
     }
 
     case fromActions.Types.SIGN_UP_EMAIL_SUCCESS: {
@@ -78,7 +100,7 @@ export function reducer(
         ...state,
         loading: false,
         entity: action.user,
-        id: action.id,
+        email: action.email,
         error: null,
       };
     }
@@ -88,7 +110,7 @@ export function reducer(
         ...state,
         loading: false,
         entity: null,
-        id: null,
+        email: null,
         error: action.error,
       };
     }
@@ -106,7 +128,7 @@ export function reducer(
         ...state,
         loading: false,
         entity: null,
-        id: null,
+        email: null,
         error: action.error,
       };
     }

@@ -4,17 +4,20 @@ import { AuthGuard } from '@app/guards/auth/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'welcome',
+    path: 'nuevo',
     loadChildren: () =>
-      import('./pages/welcome/welcome.module').then((m) => m.WelcomeModule),
+      import('./pages/inmueble-nuevo/inmueble-nuevo.module').then(
+        (m) => m.InmuebleNuevoModule
+      ),
     canActivate: [AuthGuard],
   },
   {
-    path: '404',
+    path: 'list',
     loadChildren: () =>
-      import('./pages/not-found/not-found.module').then(
-        (m) => m.NotFoundModule
+      import('./pages/inmueble-list/inmueble-list.module').then(
+        (m) => m.InmuebleListModule
       ),
+    canActivate: [AuthGuard],
   },
 ];
 
@@ -22,4 +25,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class StaticRoutingModule {}
+export class InmuebleRoutingModule {}

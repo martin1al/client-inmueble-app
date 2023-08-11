@@ -4,7 +4,6 @@ import { NotificationService } from '@app/services';
 import * as fromRoot from './store';
 import * as fromUser from './store/user';
 import { Store, select } from '@ngrx/store';
-import { user } from 'rxfire/auth';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -27,7 +26,7 @@ export class AppComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.user$ = this.store.pipe(
       select(fromUser.getUser)
     ) as Observable<fromUser.UserResponse>;
@@ -42,7 +41,7 @@ export class AppComponent implements OnInit {
   }
 
   onFilesChanged(urls: string | string[]): void {
-    console.log('urls', urls);
+    console.log(urls);
   }
 
   onSuccess(): void {

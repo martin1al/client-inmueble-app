@@ -9,7 +9,7 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { UserResponse } from './user.models';
 import { environment } from '@src/environments/environment';
 
-type Action = fromActions.ALL;
+type Action = fromActions.All;
 
 @Injectable()
 export class UserEffects {
@@ -55,9 +55,12 @@ export class UserEffects {
     this.actions.pipe(
       ofType(fromActions.Types.SIGN_IN_EMAIL),
       map((action: fromActions.SignInEmail) => action.credentials),
-      switchMap((userdata) =>
+      switchMap((credentials) =>
         this.httpClient
-          .post<UserResponse>(`${environment.url}api/usuario/login`, userdata)
+          .post<UserResponse>(
+            `${environment.url}api/usuario/login`,
+            credentials
+          )
           .pipe(
             tap((response: UserResponse) => {
               localStorage.setItem('token', response.token);
@@ -88,22 +91,17 @@ export class UserEffects {
           return this.httpClient
             .get<UserResponse>(`${environment.url}api/usuario`)
             .pipe(
-              tap((response: UserResponse) => {
+              tap((user: UserResponse) => {
                 console.log(
                   'data del usuario en sesion que viene del servidor',
-                  response
+                  user
                 );
               }),
               map(
-                (response: UserResponse) =>
-                  new fromActions.InitAuthorized(
-                    response.email,
-                    response || null
-                  )
+                (user: UserResponse) =>
+                  new fromActions.InitAuthorized(user.email, user || null)
               ),
-              catchError((err) => {
-                return of(new fromActions.InitError(err.message));
-              })
+              catchError((err) => of(new fromActions.InitError(err.message)))
             );
         } else {
           return of(new fromActions.InitUnauthorized());

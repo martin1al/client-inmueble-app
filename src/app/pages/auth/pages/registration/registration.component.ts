@@ -23,7 +23,7 @@ export class RegistrationComponent implements OnInit {
     if (form.valid) {
       const userCreateRequest: fromUser.UserCreateRequest = {
         nombre: form.value.nombre,
-        apellido: form.value.apellidos,
+        apellido: form.value.apellido,
         telefono: form.value.telefono,
         username: form.value.username,
         email: form.value.email,

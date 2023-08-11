@@ -8,7 +8,7 @@ import {
 export enum Types {
   INIT = '[User] Init: Start',
   INIT_AUTHORIZED = '[User] Init: Authorized',
-  INIT_UNAUTHORIZED = '[User] Init: Unuthorized',
+  INIT_UNAUTHORIZED = '[User] Init: Unauthorized',
   INIT_ERROR = '[User] Init: Error',
 
   SIGN_IN_EMAIL = '[User] Login: Start',
@@ -80,7 +80,7 @@ export class SignOut implements Action {
 }
 
 export class SignOutSuccess implements Action {
-  readonly type = Types.SIGN_OUT_EMAIL_SUCCESS;
+  readonly type = Types.SIGN_OUT_EMAIL;
   constructor() {}
 }
 
@@ -89,7 +89,7 @@ export class SignOutError implements Action {
   constructor(public error: string) {}
 }
 
-export type ALL =
+export type All =
   | Init
   | InitAuthorized
   | InitUnauthorized
